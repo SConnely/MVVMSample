@@ -12,5 +12,11 @@
             </Setter>
             <Setter Property="Margin" Value="4,4" />
         </Style>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">*</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
     </Application.Resources>
 </Application>

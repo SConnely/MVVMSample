@@ -1,5 +1,6 @@
 ﻿namespace MVVM_Sample.Model
 {
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using MVVM_Sample.Model.Base;
 
@@ -16,6 +17,7 @@
         }
 
         [Required]
+        [DisplayName("Department Name")]
         [StringLength(50, ErrorMessage = "Invalid Length", MinimumLength = 5)]
         public string Name
         {

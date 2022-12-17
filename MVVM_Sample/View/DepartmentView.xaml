@@ -53,11 +53,11 @@
 
             <Label Grid.Row="0" Grid.Column="0">Name</Label>
 
-            <TextBox Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding Entity.Name, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding Entity.Name, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <Label Grid.Row="1" Grid.Column="0">Description</Label>
 
-            <TextBox Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding Entity.Description, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding Entity.Description, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Entity.ChangedText, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>

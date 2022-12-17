@@ -12,6 +12,8 @@
         private string email;
         private string phone;
 
+        private int age;
+
         public int Id
         {
             get => this.id;
@@ -49,6 +51,12 @@
         {
             get => this.phone;
             set => this.SetProperty(ref this.phone, value);
+        }
+
+        public int Age
+        {
+            get => this.age;
+            set => this.SetProperty(ref this.age, value);
         }
     }
 }
