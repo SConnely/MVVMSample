@@ -3,18 +3,22 @@ namespace MVVM_Sample.Model.Base
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Text;
     using System.Threading.Tasks;
     using MVVM_Sample.Model.Interface;
 
-    public class EntityBase : INotifyPropertyChanged, IModel
+    public class EntityBase : INotifyPropertyChanged, IModel, IDataErrorInfo
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string changedText = string.Empty;
+
+        private ObservableCollection<ErrorMessage> errors = new ObservableCollection<ErrorMessage>();
 
         public bool HasEntityChanged { get; set; }
 
@@ -22,6 +26,66 @@ namespace MVVM_Sample.Model.Base
         {
             get => this.changedText;
             set => this.SetProperty(ref this.changedText, value);
+        }
+
+        public ObservableCollection<ErrorMessage> Errors
+        {
+            get => this.errors;
+            set => this.SetProperty(ref this.errors, value);
+        }
+
+        public string Error => throw new NotImplementedException();
+
+        public string this[string propertyName]
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(propertyName))
+                {
+                    throw new ArgumentException("Invalid property name", propertyName);
+                }
+
+                string error = string.Empty;
+
+                var value = GetPropertyValue(propertyName);
+
+                var results = new List<ValidationResult>(1);
+
+                var result = Validator.TryValidateProperty(
+                    value,
+                    new ValidationContext(this, null, null)
+                    {
+                        MemberName = propertyName
+                    },
+                    results);
+
+                if (!result)
+                {
+                    error = results.First().ErrorMessage;
+
+                    if (this.Errors.Any(x => x.PropertyName == propertyName))
+                    {
+                        var errorMessage = this.Errors.FirstOrDefault(x => x.PropertyName == propertyName);
+                        errorMessage.Message = error;
+                    }
+                    else
+                    {
+                        this.Errors.Add(new ErrorMessage()
+                        {
+                            PropertyName = propertyName,
+                            Message = error
+                        });
+                    }
+                }
+
+                return error;
+            }
+        }
+
+        private object GetPropertyValue(string propertyName)
+        {
+            var propInfo = GetType().GetProperty(propertyName);
+            return propInfo.GetValue(this);
         }
 
         public virtual void OnPropertyChanged([CallerMemberName] string propertyName = "Unknown")
@@ -59,6 +123,13 @@ namespace MVVM_Sample.Model.Base
                 && propertyName != nameof(this.ChangedText))
                 || alwaysUpdate)
             {
+                var existingError = this.Errors.FirstOrDefault(x => x.PropertyName == propertyName);
+
+                if (existingError != null)
+                {
+                    this.Errors.Remove(existingError);
+                }
+
                 bool valueChanged = false;
 
                 string changedValue = $"{privateValue} -> {newValue}";

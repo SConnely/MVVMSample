@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:MVVM_Sample"
              Startup="Application_Startup">
     <Application.Resources>
-         
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <Binding RelativeSource="{RelativeSource Self}" Path="(Validation.Errors)[0].ErrorContent" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="4,4" />
+        </Style>
     </Application.Resources>
 </Application>

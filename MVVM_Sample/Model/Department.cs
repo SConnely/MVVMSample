@@ -1,5 +1,6 @@
 ﻿namespace MVVM_Sample.Model
 {
+    using System.ComponentModel.DataAnnotations;
     using MVVM_Sample.Model.Base;
 
     public class Department : EntityBase
@@ -14,6 +15,8 @@
             set => this.SetProperty(ref this.id, value);
         }
 
+        [Required]
+        [StringLength(50, ErrorMessage = "Invalid Length", MinimumLength = 5)]
         public string Name
         {
             get => this.name;

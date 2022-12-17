@@ -54,38 +54,56 @@
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="60" />
-                <RowDefinition Height="90" />
+                <RowDefinition MinHeight="80" />
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0">Name</Label>
 
-            <TextBox Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding Entity.Name, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding Entity.Name, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <Label Grid.Row="1" Grid.Column="0">Address 1</Label>
 
-            <TextBox Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding Entity.Address1, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding Entity.Address1, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <Label Grid.Row="2" Grid.Column="0">Address 2</Label>
 
-            <TextBox Margin="5" Grid.Row="2" Grid.Column="1" Text="{Binding Entity.Address2, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="2" Grid.Column="1" Text="{Binding Entity.Address2, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <Label Grid.Row="3" Grid.Column="0">City</Label>
 
-            <TextBox Margin="5" Grid.Row="3" Grid.Column="1" Text="{Binding Entity.City, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="3" Grid.Column="1" Text="{Binding Entity.City, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <Label Grid.Row="4" Grid.Column="0">Province</Label>
 
-            <TextBox Margin="5" Grid.Row="4" Grid.Column="1" Text="{Binding Entity.Province, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="4" Grid.Column="1" Text="{Binding Entity.Province, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <Label Grid.Row="5" Grid.Column="0">Country</Label>
 
-            <TextBox Margin="5" Grid.Row="5" Grid.Column="1" Text="{Binding Entity.Country, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="5" Grid.Column="1" Text="{Binding Entity.Country, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <Label Grid.Row="6" Grid.Column="0">Postal Code</Label>
 
-            <TextBox Margin="5" Grid.Row="6" Grid.Column="1" Text="{Binding Entity.PostalCode, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="6" Grid.Column="1" Text="{Binding Entity.PostalCode, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Entity.ChangedText, UpdateSourceTrigger=PropertyChanged}" />
+
+            <ItemsControl Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Entity.Errors, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Height="20" Orientation="Horizontal">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="140" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding PropertyName, StringFormat='Error on {0}: '}" Foreground="Red" />
+                                <TextBlock Grid.Column="1" Text="{Binding Message}" Foreground="Red" />
+                            </Grid>
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
     </Grid>
 </UserControl>

@@ -1,6 +1,8 @@
 ﻿
 namespace MVVM_Sample.Model
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.Configuration;
     using System.Threading.Tasks;
     using MVVM_Sample.Model.Base;
 
@@ -20,11 +22,16 @@ namespace MVVM_Sample.Model
             get => this.id;
             set => this.SetProperty(ref this.id, value);
         }
+
+        [Required]
+        [StringLength(200, ErrorMessage = "Company Name cannot be more than 200 characters or less than 10", MinimumLength = 10)]
         public string Name
         {
             get => this.name;
             set => this.SetProperty(ref this.name, value);
         }
+
+        [Required]
         public string Address1
         {
             get => this.address1;
@@ -37,24 +44,29 @@ namespace MVVM_Sample.Model
             set => this.SetProperty(ref this.address2, value);
         }
 
+        [Required]
         public string City
         {
             get => this.city;
             set => this.SetProperty(ref this.city, value);
         }
 
+        [Required]
         public string Country
         {
             get => this.country;
             set => this.SetProperty(ref this.country, value);
         }
 
+        [Required]
         public string Province
         {
             get => this.province;
             set => this.SetProperty(ref this.province, value);
         }
 
+        [Required]
+        [RegularExpression("^([ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ])\\ {0,1}(\\d[ABCEGHJKLMNPRSTVWXYZ]\\d)$", ErrorMessage = "Invalid Postal Code")]
         public string PostalCode
         {
             get => this.postalCode;

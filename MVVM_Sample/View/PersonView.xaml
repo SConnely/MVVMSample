@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:MVVM_Sample.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+   
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -50,26 +51,46 @@
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
-                <RowDefinition Height="90" />
+                <RowDefinition Height="60" />
+                <RowDefinition MinHeight="30" />
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0">First Name</Label>
 
-            <TextBox Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding Entity.FirstName, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding Entity.FirstName, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+            
 
             <Label Grid.Row="1" Grid.Column="0">Last Name</Label>
 
-            <TextBox Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding Entity.LastName, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding Entity.LastName, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <Label Grid.Row="2" Grid.Column="0">Email</Label>
 
-            <TextBox Margin="5" Grid.Row="2" Grid.Column="1" Text="{Binding Entity.Email, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="2" Grid.Column="1" Text="{Binding Entity.Email, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <Label Grid.Row="3" Grid.Column="0">Phone</Label>
 
-            <TextBox Margin="5" Grid.Row="3" Grid.Column="1" Text="{Binding Entity.Phone, Mode=TwoWay}" />
+            <TextBox Margin="5" Grid.Row="3" Grid.Column="1" Text="{Binding Entity.Phone, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
             <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Entity.ChangedText, UpdateSourceTrigger=PropertyChanged}" />
+
+            <ItemsControl Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Entity.Errors, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="140" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding PropertyName, StringFormat='Error on {0}: '}" Foreground="Red" />
+                                <TextBlock Grid.Column="1" Text="{Binding Message}" Foreground="Red" />
+                            </Grid>
+                            
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
     </Grid>
 </UserControl>
