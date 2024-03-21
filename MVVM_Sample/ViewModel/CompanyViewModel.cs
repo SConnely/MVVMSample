@@ -6,12 +6,6 @@ namespace MVVM_Sample.ViewModel
 
     public class CompanyViewModel : BaseViewModel<Company>
     {
-        public CompanyViewModel()
-            : base()
-        {
-            this.Entity = new Company();
-        }
-
         public override void OnSaveEvent(string buttonName)
         {
             base.OnSaveEvent(buttonName);

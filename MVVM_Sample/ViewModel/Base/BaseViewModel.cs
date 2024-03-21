@@ -19,7 +19,7 @@ namespace MVVM_Sample.ViewModel.Base
     public class BaseViewModel<TModel> : INotifyPropertyChanged
         where TModel : class, IModel
     {
-        private TModel entity;
+        private TModel? entity = (TModel?)Activator.CreateInstance(typeof(TModel));
 
         private string changedText = string.Empty;
 
@@ -47,7 +47,7 @@ namespace MVVM_Sample.ViewModel.Base
 
         public bool HasViewModelChanged { get; set; }
 
-        public TModel Entity
+        public TModel? Entity
         {
             get => this.entity;
             set => this.SetProperty(ref this.entity, value);
